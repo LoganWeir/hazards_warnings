@@ -1,6 +1,6 @@
 FROM ruby:2.3.0
 MAINTAINER Logan Weir "loganweir@gmail.com"
-ENV REFRESHED_AT 12/6/2016
+ENV REFRESHED_AT 12/7/2016
 
 ENV APP_HOME /harvist
 RUN mkdir $APP_HOME

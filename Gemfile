@@ -7,4 +7,4 @@ gem 'json'
 gem 'rgeo'
 gem 'rgeo-geojson'
 gem 'nokogiri'
-
+gem 'bunny'
