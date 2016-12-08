@@ -1,16 +1,15 @@
 class BunnyEmitter
 
-  def initialize(queue_name)
-    @connection = Bunny.new("amqp://guest@172.25.0.2:5672")
+  def initialize(server_ip, queue_name)
+    @connection = Bunny.new(server_ip)
     @connection.start
     @channel = @connection.create_channel
     @exchange = @channel.default_exchange
-    @queue = @channel.queue(queue_name, :exclusive => true)
-    # @queue.bind(@exchange)
+    @queue = @channel.queue(queue_name)
   end
 
   def publish(message)
-    @exchange.publish(message)
+    @exchange.publish(message, :routing_key => @queue.name)
     puts "[X] Sent: #{message}"
   end
 

@@ -26,7 +26,7 @@ updated = xml_doc.css("feed updated")[0].text
 weather_warning_payload = payload_generator(public_zones, entries)
 
 # Start RabbitMQ, Publish Payload
-rabbitmq_connection = BunnyEmitter.new("nws_hazards")
+rabbitmq_connection = BunnyEmitter.new("amqp://guest@172.25.0.2:5672", "nws_hazards")
 
 rabbitmq_connection.publish("NWS Hazards Updated!!")
 
