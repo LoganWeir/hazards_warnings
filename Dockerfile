@@ -6,9 +6,11 @@ ENV APP_HOME /harvist
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
-ADD . $APP_HOME
 
-RUN gem install bundler
+ADD Gemfile $APP_HOME/Gemfile
+ADD Gemfile.lock $APP_HOME/Gemfile.lock
 RUN bundle install
+
+ADD . $APP_HOME
 
 CMD ["./weather_warning_generator.sh", "bounded_public_zones.geojson"]
