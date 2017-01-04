@@ -1,11 +1,15 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    amq-protocol (2.0.1)
+    bunny (2.6.1)
+      amq-protocol (>= 2.0.1)
     diff-lcs (1.2.5)
     json (2.0.2)
     mini_portile2 (2.1.0)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    pg (0.19.0)
     rgeo (0.5.3)
     rgeo-geojson (0.4.3)
       rgeo (~> 0.5)
@@ -22,17 +26,21 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    sequel (4.42.0)
     trollop (2.1.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  bunny
   json
   nokogiri
+  pg
   rgeo
   rgeo-geojson
   rspec
+  sequel
   trollop
 
 RUBY VERSION

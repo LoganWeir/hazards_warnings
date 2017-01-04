@@ -1,3 +1,67 @@
+# Validates Events
+# Compares events in NWS Hazards to Public Zone Polygons, Matches them
+# Formats Events and Event Category
+# Formats Output in Harvist Map Layer
+def payload_generator(public_zones, entries)
+
+  for event in entries
+
+    # Only Valid Events
+    next unless entry_validation(event) == true
+
+    geocodes = event.css("cap|geocode value")
+
+    event_geocodes = geocodes[1].text.split(" ")
+
+    for dirty_code in event_geocodes
+
+      # Snipping out the initial 'CAZ' from the NWS Codes
+      cleaned_code = dirty_code[3..-1].to_s
+
+      # If entry code is in hash.keys
+      if public_zones.keys.include?(cleaned_code)
+
+        # Add to event to array of events associated with the polygon hash.
+        public_zones[cleaned_code]['events'] << event_hash_builder(event)
+
+      end
+
+    end
+
+  end
+
+  formatted_output = payload_formatter(public_zones)
+
+  return formatted_output
+
+end
+
+
+# Checks for valid, "Actual" Events
+def entry_validation(event)
+
+  status = event.css("cap|status").text
+  msgtype = event.css("cap|msgType").text
+
+  if status != "Actual"
+
+    return false
+
+  elsif (msgtype != "Alert") && (msgtype != "Update")
+
+    return false
+
+  else
+
+    return true
+
+  end
+    
+end
+
+
+# Creates a Map Layer for Harvist
+# Each Feature is a Public Zone, which contains NWS Hazard Event(s)
 def payload_formatter(unformatted_payload)
 
   formatted_output = {}
@@ -59,6 +123,7 @@ end
 
 
 # This is only temporary, much more information to display
+# Marges all Hazards in a Public Zone into one Title/Description
 def pop_up_title_description(event_array)
 
   if event_array.length == 1
@@ -91,65 +156,7 @@ end
 
 
 
-
-def payload_generator(public_zones, entries)
-
-  for event in entries
-
-    # Only Valid Events
-    next unless entry_validation(event) == true
-
-    geocodes = event.css("cap|geocode value")
-
-    event_geocodes = geocodes[1].text.split(" ")
-
-    for dirty_code in event_geocodes
-
-      # Snipping out the initial 'CAZ' from the NWS Codes
-      cleaned_code = dirty_code[3..-1].to_s
-
-      # If entry code is in hash.keys
-      if public_zones.keys.include?(cleaned_code)
-
-        # Add to event to array of events associated with the polygon hash.
-        public_zones[cleaned_code]['events'] << event_hash_builder(event)
-
-      end
-
-    end
-
-  end
-
-  formatted_output = payload_formatter(public_zones)
-
-  return formatted_output
-
-end
-
-
-
-def entry_validation(event)
-
-  status = event.css("cap|status").text
-  msgtype = event.css("cap|msgType").text
-
-  if status != "Actual"
-
-    return false
-
-  elsif (msgtype != "Alert") && (msgtype != "Update")
-
-    return false
-
-  else
-
-    return true
-
-  end
-    
-end
-
-
+# Grabs Relevant Data from Event
 def event_hash_builder(event)
 
   key_tag_hash = {
@@ -178,7 +185,7 @@ def event_hash_builder(event)
 end
 
 
-
+# Translates Event Categories
 def category_cleaner(short_category)
 
   nws_categories = {
