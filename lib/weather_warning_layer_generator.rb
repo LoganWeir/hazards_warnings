@@ -21,8 +21,13 @@ require 'pg'
 #                      host: ENV['DATABASE_HOST'],
 #                      port: 5432)
 
+
+
 # # Retrieve 'current' events for this type
 # # Retrieve points or area of intersection
+
+
+
 
 # Open, Load geoJSON
 geo_json_zone_file = ARGV[0]
@@ -44,16 +49,20 @@ for event in weather_warning_payload['feature_data']
   puts event['popup_title']
 end
 
-
 # # For testing payload size:
 # output = open(ARGV[1], 'w')
 # output.write(weather_warning_payload.to_json)
+
+
 
 
 # # NEED TO ADD LAYER TO DB
 
 
 # # NEED TO UPDATE CURRENT/HISTORICAL EVENTS IN DB
+
+
+
 
 
 
