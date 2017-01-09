@@ -2,7 +2,7 @@
 # Compares events in NWS Hazards to Public Zone Polygons, Matches them
 # Formats Events and Event Category
 # Formats Output in Harvist Map Layer
-def payload_generator(public_zones, entries)
+def layer_generator(public_zones, entries)
 
   for event in entries
 
@@ -30,7 +30,7 @@ def payload_generator(public_zones, entries)
 
   end
 
-  formatted_output = payload_formatter(public_zones)
+  formatted_output = layer_formatter(public_zones)
 
   return formatted_output
 
@@ -62,7 +62,7 @@ end
 
 # Creates a Map Layer for Harvist
 # Each Feature is a Public Zone, which contains NWS Hazard Event(s)
-def payload_formatter(unformatted_payload)
+def layer_formatter(unformatted_payload)
 
   formatted_output = {}
 
@@ -74,6 +74,9 @@ def payload_formatter(unformatted_payload)
   layer_hash = {}
   layer_hash['name'] = "National Weather Service Public Alerts"
   layer_hash['id'] = layer_id
+
+  # # NEED TO ADD layer_type (here, other data miners, and in Harvist)
+  # layer_hash['layer_type'] = 'polygon'
 
   formatted_output['layer_data'] = layer_hash
 

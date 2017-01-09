@@ -27,7 +27,6 @@ GEM
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
     sequel (4.42.0)
-    trollop (2.1.2)
 
 PLATFORMS
   ruby
@@ -41,7 +40,6 @@ DEPENDENCIES
   rgeo-geojson
   rspec
   sequel
-  trollop
 
 RUBY VERSION
    ruby 2.3.0p0
